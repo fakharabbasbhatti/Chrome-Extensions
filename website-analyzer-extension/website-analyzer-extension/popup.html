@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brand & Contact Extractor</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body class="light">
+
+  <div class="app">
+
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">BrandScan</span>
+      </div>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+        <span class="icon-sun">☀</span>
+        <span class="icon-moon">☽</span>
+      </button>
+    </header>
+
+    <!-- URL Input -->
+    <section class="input-section">
+      <div class="url-field">
+        <input
+          type="text"
+          id="urlInput"
+          class="url-input"
+          placeholder="Enter website URL…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="scan-btn" id="scanBtn">
+          <span class="scan-btn-text">Scan</span>
+          <span class="scan-btn-icon">→</span>
+        </button>
+      </div>
+      <p class="hint" id="hint">Works on any publicly accessible website.</p>
+    </section>
+
+    <!-- Loading State -->
+    <div class="loading" id="loading" hidden>
+      <div class="spinner"></div>
+      <p class="loading-text">Scanning website…</p>
+      <p class="loading-sub">This may take a few seconds</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-banner" id="errorBanner" hidden>
+      <span class="error-icon">⚠</span>
+      <span id="errorMsg">Something went wrong.</span>
+    </div>
+
+    <!-- Results -->
+    <div class="results" id="results" hidden>
+
+      <!-- Site Meta -->
+      <div class="site-meta" id="siteMeta"></div>
+
+      <!-- Export Row -->
+      <div class="export-row">
+        <button class="export-btn" id="exportJson">⤓ JSON</button>
+        <button class="export-btn" id="exportCsv">⤓ CSV</button>
+      </div>
+
+      <!-- Colors Section -->
+      <section class="result-section" id="colorsSection">
+        <h2 class="section-title">
+          <span class="section-icon">◈</span> Colors
+        </h2>
+        <div class="color-grid" id="colorGrid"></div>
+
+        <div class="buttons-subsection" id="btnSubsection" hidden>
+          <h3 class="subsection-title">Button Colors</h3>
+          <div class="btn-swatches" id="btnSwatches"></div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="result-section" id="contactSection">
+        <h2 class="section-title">
+          <span class="section-icon">◉</span> Contact
+        </h2>
+        <div class="contact-list" id="contactList">
+          <p class="empty-state">No contact info found on this page.</p>
+        </div>
+      </section>
+
+      <!-- Social Section -->
+      <section class="result-section" id="socialSection" hidden>
+        <h2 class="section-title">
+          <span class="section-icon">◎</span> Social Media
+        </h2>
+        <div class="social-list" id="socialList"></div>
+      </section>
+
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Copied!</div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

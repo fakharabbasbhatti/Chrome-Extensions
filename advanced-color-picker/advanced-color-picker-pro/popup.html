@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Color Picker Pro</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header__logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M12 2C12 2 7 7 7 12C7 15.866 9.13401 19 12 19C14.866 19 17 15.866 17 12C17 7 12 2 12 2Z" fill="currentColor" opacity="0.3"/>
+        <circle cx="12" cy="12" r="3" fill="currentColor"/>
+      </svg>
+      <span>Color Picker Pro</span>
+    </div>
+    <div class="header__actions">
+      <button class="icon-btn" id="btn-options" title="Settings" aria-label="Open settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 12 2v0a10 10 0 0 0-7.07 2.93M2 12H2A10 10 0 0 0 4.93 19.07M12 22v0a10 10 0 0 0 7.07-2.93M22 12h0a10 10 0 0 0-2.93-7.07"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Main ───────────────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Color Preview -->
+    <section class="preview-section" aria-label="Color preview">
+      <div class="color-preview" id="color-preview" aria-live="polite" aria-label="Current color preview">
+        <span class="color-preview__label" id="preview-label">#6C63FF</span>
+      </div>
+    </section>
+
+    <!-- Eyedropper & Input Row -->
+    <section class="pick-section">
+      <button class="btn btn--primary btn--dropper" id="btn-eyedropper" title="Pick color from screen (Alt+Shift+C)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 3l3.5 3.5"/><path d="M8 8l-5 13 2 2 13-5-10-10z"/>
+          <path d="M14.5 2.5c1 1 1 2.5 0 3.5L8 12 6 10l5.5-6.5c1-1 2.5-1 3 -1z"/>
+        </svg>
+        Pick from Screen
+      </button>
+      <div class="hex-input-wrap">
+        <label for="hex-input" class="visually-hidden">Enter hex color</label>
+        <input type="text" id="hex-input" class="hex-input" placeholder="#6C63FF" maxlength="9" spellcheck="false" autocomplete="off" />
+      </div>
+    </section>
+
+    <!-- Format Tabs -->
+    <section class="formats-section" aria-label="Color formats">
+      <div class="format-tabs" role="tablist" aria-label="Color format tabs">
+        <button class="format-tab active" role="tab" aria-selected="true"  data-format="hex"  id="tab-hex">HEX</button>
+        <button class="format-tab"        role="tab" aria-selected="false" data-format="rgb"  id="tab-rgb">RGB</button>
+        <button class="format-tab"        role="tab" aria-selected="false" data-format="rgba" id="tab-rgba">RGBA</button>
+        <button class="format-tab"        role="tab" aria-selected="false" data-format="hsl"  id="tab-hsl">HSL</button>
+        <button class="format-tab"        role="tab" aria-selected="false" data-format="hsv"  id="tab-hsv">HSV</button>
+      </div>
+
+      <div class="format-value-row">
+        <input type="text" id="format-value" class="format-value" readonly aria-label="Color value in selected format" />
+        <button class="icon-btn copy-btn" id="btn-copy" title="Copy to clipboard" aria-label="Copy color value">
+          <svg id="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <svg id="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Favorites button row -->
+    <section class="action-row">
+      <button class="btn btn--secondary" id="btn-add-favorite" title="Save to favorites">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        Save to Favorites
+      </button>
+    </section>
+
+    <!-- Tabs: History / Favorites -->
+    <section class="palette-section">
+      <div class="palette-tabs" role="tablist" aria-label="Palette tabs">
+        <button class="palette-tab active" role="tab" aria-selected="true"  id="ptab-history"   data-ptab="history">History</button>
+        <button class="palette-tab"        role="tab" aria-selected="false" id="ptab-favorites" data-ptab="favorites">Favorites</button>
+      </div>
+
+      <!-- History Panel -->
+      <div class="palette-panel active" id="panel-history" role="tabpanel" aria-labelledby="ptab-history">
+        <div class="palette-grid" id="history-grid" aria-label="Color history"></div>
+        <div class="palette-empty hidden" id="history-empty">No colors yet — pick one above!</div>
+        <div class="palette-actions">
+          <button class="btn btn--ghost btn--sm" id="btn-clear-history">Clear History</button>
+          <button class="btn btn--ghost btn--sm" id="btn-export">Export JSON</button>
+          <button class="btn btn--ghost btn--sm" id="btn-import">Import JSON</button>
+        </div>
+      </div>
+
+      <!-- Favorites Panel -->
+      <div class="palette-panel" id="panel-favorites" role="tabpanel" aria-labelledby="ptab-favorites">
+        <div class="palette-grid" id="favorites-grid" aria-label="Favorite colors"></div>
+        <div class="palette-empty hidden" id="favorites-empty">No favorites yet — star a color to save it!</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Hidden import file input -->
+  <input type="file" id="import-file-input" accept=".json" class="visually-hidden" aria-hidden="true" />
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- Scripts -->
+  <script src="color-picker.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

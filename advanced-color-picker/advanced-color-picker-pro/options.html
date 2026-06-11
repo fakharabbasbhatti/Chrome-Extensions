@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Color Picker Pro — Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- ── Sidebar ────────────────────────────────────────── -->
+    <aside class="sidebar">
+      <div class="sidebar__brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M12 2C12 2 7 7 7 12C7 15.866 9.13401 19 12 19C14.866 19 17 15.866 17 12C17 7 12 2 12 2Z" fill="currentColor" opacity="0.35"/>
+          <circle cx="12" cy="12" r="3" fill="currentColor"/>
+        </svg>
+        <div>
+          <div class="sidebar__brand-name">Color Picker Pro</div>
+          <div class="sidebar__brand-version">v1.0.0</div>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav" aria-label="Settings navigation">
+        <button class="nav-item active" data-section="appearance">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          Appearance
+        </button>
+        <button class="nav-item" data-section="defaults">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+          Format Defaults
+        </button>
+        <button class="nav-item" data-section="data">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          Data Management
+        </button>
+        <button class="nav-item" data-section="about">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          About
+        </button>
+      </nav>
+    </aside>
+
+    <!-- ── Content ─────────────────────────────────────────── -->
+    <main class="content">
+
+      <!-- Appearance Section -->
+      <section class="section active" id="section-appearance" aria-labelledby="heading-appearance">
+        <h1 class="section__title" id="heading-appearance">Appearance</h1>
+
+        <div class="card">
+          <div class="field">
+            <label class="field__label" for="theme-select">Theme</label>
+            <p class="field__desc">Choose the colour scheme for the extension popup.</p>
+            <div class="theme-cards" id="theme-cards" role="radiogroup" aria-label="Select theme">
+              <button class="theme-card active" data-theme="auto" role="radio" aria-checked="true">
+                <div class="theme-card__preview theme-card__preview--auto"></div>
+                <span>Auto</span>
+              </button>
+              <button class="theme-card" data-theme="light" role="radio" aria-checked="false">
+                <div class="theme-card__preview theme-card__preview--light"></div>
+                <span>Light</span>
+              </button>
+              <button class="theme-card" data-theme="dark" role="radio" aria-checked="false">
+                <div class="theme-card__preview theme-card__preview--dark"></div>
+                <span>Dark</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Format Defaults Section -->
+      <section class="section" id="section-defaults" aria-labelledby="heading-defaults">
+        <h1 class="section__title" id="heading-defaults">Format Defaults</h1>
+
+        <div class="card">
+          <div class="field">
+            <label class="field__label" for="default-format">Default Color Format</label>
+            <p class="field__desc">The format shown first when a color is picked.</p>
+            <select id="default-format" class="select">
+              <option value="hex">HEX — #RRGGBB</option>
+              <option value="rgb">RGB — rgb(r, g, b)</option>
+              <option value="rgba">RGBA — rgba(r, g, b, a)</option>
+              <option value="hsl">HSL — hsl(h, s%, l%)</option>
+              <option value="hsv">HSV — hsv(h, s%, v%)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="field">
+            <label class="field__label field__label--row">
+              <span>Show desktop notifications</span>
+              <label class="toggle" aria-label="Toggle desktop notifications">
+                <input type="checkbox" id="toggle-notifications" />
+                <span class="toggle__track"><span class="toggle__thumb"></span></span>
+              </label>
+            </label>
+            <p class="field__desc">Show a brief notification when a color is picked.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Data Management Section -->
+      <section class="section" id="section-data" aria-labelledby="heading-data">
+        <h1 class="section__title" id="heading-data">Data Management</h1>
+
+        <div class="card">
+          <div class="field">
+            <label class="field__label">Export Colors</label>
+            <p class="field__desc">Download all history and favorites as a JSON file.</p>
+            <button class="btn btn--primary" id="opt-btn-export">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export JSON
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="field">
+            <label class="field__label">Import Colors</label>
+            <p class="field__desc">Load colors from a previously exported JSON file. This will replace your current history and favorites.</p>
+            <button class="btn btn--secondary" id="opt-btn-import">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Import JSON
+            </button>
+          </div>
+        </div>
+
+        <div class="card card--danger">
+          <div class="field">
+            <label class="field__label">Clear All Data</label>
+            <p class="field__desc">Permanently delete all history, favorites, and settings. This cannot be undone.</p>
+            <button class="btn btn--danger" id="opt-btn-clear-all">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              Clear All Data
+            </button>
+          </div>
+        </div>
+
+        <input type="file" id="opt-import-file" accept=".json" class="visually-hidden" />
+      </section>
+
+      <!-- About Section -->
+      <section class="section" id="section-about" aria-labelledby="heading-about">
+        <h1 class="section__title" id="heading-about">About</h1>
+
+        <div class="card card--about">
+          <div class="about-logo">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="var(--accent)" stroke-width="1.5"/>
+              <path d="M12 2C12 2 7 7 7 12C7 15.866 9.13401 19 12 19C14.866 19 17 15.866 17 12C17 7 12 2 12 2Z" fill="var(--accent)" opacity="0.35"/>
+              <circle cx="12" cy="12" r="3" fill="var(--accent)"/>
+            </svg>
+          </div>
+          <h2 class="about-name">Advanced Color Picker Pro</h2>
+          <p class="about-version">Version 1.0.0</p>
+          <p class="about-desc">Pick any color from any webpage. Supports HEX, RGB, RGBA, HSL, and HSV formats. Built with Manifest V3 and the native EyeDropper API.</p>
+
+          <div class="about-features">
+            <div class="feature-badge">🎯 EyeDropper API</div>
+            <div class="feature-badge">🎨 5 Color Formats</div>
+            <div class="feature-badge">⭐ Favorites</div>
+            <div class="feature-badge">📋 One-Click Copy</div>
+            <div class="feature-badge">🌙 Dark Mode</div>
+            <div class="feature-badge">📤 Export / Import</div>
+          </div>
+
+          <p class="about-shortcut">
+            <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> — Pick color from any page
+          </p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+  <script src="color-picker.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

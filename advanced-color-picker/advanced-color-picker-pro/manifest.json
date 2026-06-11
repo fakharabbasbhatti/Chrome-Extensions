@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "Advanced Color Picker Pro",
+  "version": "1.0.0",
+  "description": "Pick any color from any webpage. Supports HEX, RGB, RGBA, HSL, HSV formats with history and favorites.",
+  "author": "Advanced Color Picker Pro",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Advanced Color Picker Pro"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "clipboardWrite",
+    "clipboardRead"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["color-picker.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
