@@ -15,6 +15,11 @@
 
 'use strict';
 
+// Holds the most recent capture result in memory for the lifetime of the
+// service worker. Avoids chrome.storage.session quota issues with large
+// full-page PNGs (which can exceed the ~10MB total storage limit).
+let latestScreenshot = null;
+
 // ── Helpers ──────────────────────────────────────────────────
 
 /**
@@ -243,13 +248,13 @@ async function runCapture(tab) {
     const dataUrl   = await canvasToDataUrl(canvas);
     const fileSize  = blob.size;
 
-    // Store result in session storage for popup retrieval
-    await chrome.storage.session.set({
-      screenshotResult: { dataUrl, width: viewportWidth, height: outputHeight, fileSize },
-    });
+    // Store result in memory (storage.session has a ~10MB total quota which
+    // a single full-page PNG can exceed, causing silent write failures and
+    // a broken preview image on subsequent captures).
+    latestScreenshot = { dataUrl, width: viewportWidth, height: outputHeight, fileSize };
 
     sendProgress(100, 'Capture complete!');
-    notifyPopup({ type: 'CAPTURE_DONE', width: viewportWidth, height: outputHeight, fileSize });
+    notifyPopup({ type: 'CAPTURE_DONE', width: viewportWidth, height: outputHeight, fileSize, dataUrl });
 
   } catch (err) {
     console.error('[FullPageScreenshot] Capture error:', err);
@@ -287,13 +292,12 @@ function generateFilename() {
  * Data URLs have no such lifecycle dependency.
  */
 async function downloadScreenshot() {
-  const stored = await chrome.storage.session.get('screenshotResult');
-  if (!stored.screenshotResult) {
+  if (!latestScreenshot) {
     notifyPopup({ type: 'DOWNLOAD_ERROR', message: 'No screenshot data found. Please capture again.' });
     return;
   }
 
-  const { dataUrl } = stored.screenshotResult;
+  const { dataUrl } = latestScreenshot;
   const filename = generateFilename();
 
   chrome.downloads.download(
@@ -345,6 +349,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'DOWNLOAD_SCREENSHOT') {
     downloadScreenshot();
     sendResponse({ received: true });
+    return true;
+  }
+
+  if (message.type === 'GET_LATEST_SCREENSHOT') {
+    sendResponse({ screenshot: latestScreenshot });
     return true;
   }
 });

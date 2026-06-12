@@ -89,15 +89,23 @@ function showError(message) {
 
 /**
  * Shows the preview panel with the captured image.
+ * @param {number} width
+ * @param {number} height
+ * @param {number} fileSize
+ * @param {string} [dataUrl] - if provided, used directly for the preview image
  */
-async function showPreview(width, height, fileSize) {
-  // Load the stored screenshot for the preview image
-  try {
-    const stored = await chrome.storage.session.get('screenshotResult');
-    if (stored.screenshotResult) {
-      previewImg.src = stored.screenshotResult.dataUrl;
-    }
-  } catch (_) { /* Preview is non-critical */ }
+async function showPreview(width, height, fileSize, dataUrl) {
+  if (dataUrl) {
+    previewImg.src = dataUrl;
+  } else {
+    // Fallback: ask background for the latest screenshot (e.g. on popup re-open)
+    try {
+      const res = await chrome.runtime.sendMessage({ type: 'GET_LATEST_SCREENSHOT' });
+      if (res && res.screenshot) {
+        previewImg.src = res.screenshot.dataUrl;
+      }
+    } catch (_) { /* Preview is non-critical */ }
+  }
 
   // Build meta string: dimensions + file size
   const parts = [`${width} × ${height}px`];
@@ -118,7 +126,7 @@ chrome.runtime.onMessage.addListener((message) => {
       break;
 
     case 'CAPTURE_DONE':
-      showPreview(message.width, message.height, message.fileSize);
+      showPreview(message.width, message.height, message.fileSize, message.dataUrl);
       break;
 
     case 'CAPTURE_ERROR':
@@ -194,10 +202,10 @@ btnRetry.addEventListener('click', () => {
 // On popup open, if a recent screenshot exists, show preview immediately
 (async function init() {
   try {
-    const stored = await chrome.storage.session.get('screenshotResult');
-    if (stored.screenshotResult) {
-      const { width, height, fileSize } = stored.screenshotResult;
-      showPreview(width, height, fileSize);
+    const res = await chrome.runtime.sendMessage({ type: 'GET_LATEST_SCREENSHOT' });
+    if (res && res.screenshot) {
+      const { width, height, fileSize, dataUrl } = res.screenshot;
+      showPreview(width, height, fileSize, dataUrl);
       return;
     }
   } catch (_) { /* Start fresh */ }
