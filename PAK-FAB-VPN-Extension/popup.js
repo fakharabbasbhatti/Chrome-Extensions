@@ -1,0 +1,1 @@
+const b=document.getElementById('btn');const s=document.getElementById('status');let c=false;b.onclick=()=>{c=!c;s.textContent=c?'Connected':'Disconnected';b.textContent=c?'Disconnect':'Connect';};

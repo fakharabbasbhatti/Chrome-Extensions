@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "PAK FAB VPN",
+  "version": "1.0.0",
+  "description": "PAK FAB VPN Chrome Extension Demo",
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "options.html"
+}
